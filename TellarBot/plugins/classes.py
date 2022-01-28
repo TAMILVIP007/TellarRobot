@@ -54,14 +54,11 @@ class Manager:
         else:
             if response_time > config['avg_response_time']:
                 logging.warning(f'{username} is slow, Time taken to respond: {response_time}')
-                self.bot_details[username]['status'], status = "UP", "UP"
-                self.bot_details[username]['response_time'], response_time = response_time, response_time
-                self.bot_details[username]['slow'], slow = True, True
             else:
                 logging.info(f"{username} is performing normally.")
-                self.bot_details[username]['status'], status = "UP", "UP"
-                self.bot_details[username]['response_time'], response_time = response_time, response_time
-                self.bot_details[username]['slow'], slow = True, True
+            self.bot_details[username]['status'], status = "UP", "UP"
+            self.bot_details[username]['response_time'], response_time = response_time, response_time
+            self.bot_details[username]['slow'], slow = True, True
         if not self.bot_details[username]['status_message']:
             self.bot_details[username]['status_message'] = await client.send_message(LOG_CHANNEL, log_string.format(username = username, status = '❌' if status == "DOWN" else '✅', time = round(response_time, 2), speed = "Normal" if not slow else "Slow"))
         else:
